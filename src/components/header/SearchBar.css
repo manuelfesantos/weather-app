@@ -62,6 +62,22 @@
     padding: 1rem;
 }
 
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.SearchBar-loading-icon {
+    height: 1.3rem;
+    width: 1.3rem;
+    animation: rotating 2s infinite;
+}
+
 .SearchBar-results-row {
     cursor: pointer;
     width: 100%;
@@ -74,4 +90,24 @@
 
 .SearchBar-results-row:hover {
     background-color: var(--foreground-light-color);
+}
+
+@media (max-width: 550px) {
+    .SearchBar {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .SearchBar-input-wrapper {
+        width: 100%;
+    }
+
+    .SearchBar-input {
+        width: 100%;
+        height: 50px;
+    }
+
+    .SearchBar-button {
+        width: 100%;
+    }
 }

@@ -11,9 +11,16 @@ import { useUnitsContext } from "../../contexts/UnitsContext.tsx";
 export const SearchBar: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [searchResults, setSearchResults] = useState<LocationData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
   const updateSearchResults = useDebounce(async (text: string) => {
-    setSearchResults(await geocodingApi.getLocationResults(text));
+    setLoading(true);
+    const results = await geocodingApi.getLocationResults(text);
+    console.log("results:", results);
+    setNoResults(results.length === 0);
+    setSearchResults(results);
+    setLoading(false);
   }, 300);
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,11 +28,13 @@ export const SearchBar: React.FC = () => {
     if (!text) {
       setSearch("");
       setSearchResults([]);
+      setNoResults(false);
       return;
     }
     setSearch(text);
     if (text.length <= 2) {
       setSearchResults([]);
+      setNoResults(false);
     } else {
       updateSearchResults(text);
     }
@@ -46,7 +55,14 @@ export const SearchBar: React.FC = () => {
           value={search}
           onChange={handleSearch}
         />
-        <ResultsDropdown clearResults={clearResults} results={searchResults} />
+        {loading && <Loading />}
+        {!loading && (
+          <ResultsDropdown
+            clearResults={clearResults}
+            results={searchResults}
+            noResults={noResults}
+          />
+        )}
       </div>
       <button type="button" className="SearchBar-button">
         Search
@@ -55,10 +71,26 @@ export const SearchBar: React.FC = () => {
   );
 };
 
+const Loading: React.FC = () => {
+  return (
+    <div className="SearchBar-results">
+      <div className="SearchBar-results-row">
+        <img
+          className="SearchBar-loading-icon"
+          src="/images/icon-loading.svg"
+          alt="Loading icon"
+        />
+        <span>loading...</span>
+      </div>
+    </div>
+  );
+};
+
 const ResultsDropdown: React.FC<{
   results: LocationData[];
   clearResults: () => void;
-}> = ({ results, clearResults }) => {
+  noResults: boolean;
+}> = ({ results, clearResults, noResults }) => {
   const { updateForecast } = useForecastContext();
   const { updateLocation } = useLocationContext();
   const { units } = useUnitsContext();
@@ -69,20 +101,26 @@ const ResultsDropdown: React.FC<{
     clearResults();
   };
 
-  if (!results.length) return null;
+  if (!noResults && !results.length) return null;
 
   return (
     <div className="SearchBar-results">
-      {results.map((result, index) => (
-        <div
-          key={index}
-          className="SearchBar-results-row"
-          onClick={() => selectResult(result)}
-        >
-          <span className="">{result.city}</span>
-          <span>{result.country}</span>
+      {noResults ? (
+        <div className="SearchBar-results-row">
+          <span>No search result found</span>
         </div>
-      ))}
+      ) : (
+        results.map((result, index) => (
+          <div
+            key={index}
+            className="SearchBar-results-row"
+            onClick={() => selectResult(result)}
+          >
+            <span className="">{result.city}</span>
+            <span>{result.country}</span>
+          </div>
+        ))
+      )}
     </div>
   );
 };
