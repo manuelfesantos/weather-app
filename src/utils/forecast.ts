@@ -16,7 +16,7 @@ export const getForecastDetails = (
   const hourIndex = forecast.hourly.time.indexOf(hour);
   return {
     apparent_temperature: {
-      value: forecast.hourly.apparent_temperature[hourIndex],
+      value: Math.floor(forecast.hourly.apparent_temperature[hourIndex] ?? 0),
       unit: forecast.hourly_units.apparent_temperature,
     },
     relative_humidity_2m: {
@@ -32,7 +32,7 @@ export const getForecastDetails = (
       unit: forecast.hourly_units.precipitation,
     },
     temperature_2m: {
-      value: forecast.hourly.temperature_2m[hourIndex],
+      value: Math.floor(forecast.hourly.temperature_2m[hourIndex] ?? 0),
       unit: forecast.hourly_units.temperature_2m,
     },
     weather_code: {
@@ -94,8 +94,8 @@ export const getDailyForecast = (
       day,
       dayName: getWeekDayName(day),
       date: new Date(time).toISOString().split("T")[0],
-      minTemperature: forecast.daily.temperature_2m_min[index],
-      maxTemperature: forecast.daily.temperature_2m_max[index],
+      minTemperature: Math.floor(forecast.daily.temperature_2m_min[index] ?? 0),
+      maxTemperature: Math.floor(forecast.daily.temperature_2m_max[index] ?? 0),
       weatherIcon: getWeatherIcon(forecast.daily.weather_code[index]),
     };
   });
@@ -110,7 +110,7 @@ export const getHourlyForecastResults = (
     .map((time, index) => {
       if (time.startsWith(date)) {
         return {
-          temperature: forecast.hourly.temperature_2m[index],
+          temperature: Math.floor(forecast.hourly.temperature_2m[index] ?? 0),
           weatherIcon: getWeatherIcon(forecast.hourly.weather_code[index]),
           time: getHourFromTime(time),
         };

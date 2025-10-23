@@ -26,7 +26,8 @@
 
 .HourlyForecast-result {
     width: 100%;
-    padding-inline: 1rem;
+    padding-right: 1rem;
+    padding-left: 0.5rem;
     padding-block: 0.5rem;
     display: flex;
     border-radius: 10px;
@@ -39,7 +40,6 @@
 .HourlyForecast-result-icon-and-time {
     display: flex;
     align-items: center;
-    gap: 1rem;
 }
 
 @media (max-width: 1340px) {

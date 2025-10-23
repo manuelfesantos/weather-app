@@ -12,8 +12,10 @@ export const App: React.FC = () => {
       <UnitsContextProvider>
         <LocationContextProvider>
           <ForecastContextProvider>
-            <Header />
-            <Dashboard />
+            <main className="App-main">
+              <Header />
+              <Dashboard />
+            </main>
           </ForecastContextProvider>
         </LocationContextProvider>
       </UnitsContextProvider>

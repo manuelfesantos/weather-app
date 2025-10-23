@@ -6,7 +6,7 @@
 }
 
 .DailyForecast-title {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .DailyForecast-metrics {
@@ -48,7 +48,7 @@
 }
 
 .DailyForecast-metric-temp {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 200;
 }
 
