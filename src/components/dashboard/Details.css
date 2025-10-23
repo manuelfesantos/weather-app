@@ -1,0 +1,35 @@
+.Details {
+    grid-area: details;
+    display: flex;
+    align-items: start;
+    column-gap: 2rem;
+}
+
+
+.Details-metric {
+    flex: 1;
+    background-color: var(--foreground-dark-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.Details-metric-title {
+    font-weight: 200;
+    color: var(--placeholder-color);
+}
+
+.Details-metric-value {
+    font-weight: 200;
+    font-size: 2rem;
+}
+
+@media (max-width: 910px) {
+    .Details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}

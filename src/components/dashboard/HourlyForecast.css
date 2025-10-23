@@ -1,0 +1,49 @@
+.HourlyForecast {
+    grid-area: hours;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: var(--foreground-dark-color);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.HourlyForecast-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.HourlyForecast-results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: scroll;
+}
+
+.HourlyForecast-result {
+    width: 100%;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid var(--foreground-highlight-color);
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--foreground-light-color);
+}
+
+.HourlyForecast-result-icon-and-time {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (max-width: 1340px) {
+    .HourlyForecast {
+        height: 500px;
+    }
+}
